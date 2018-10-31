@@ -18,6 +18,11 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+ public function web($value='')
+ {
+	 header('Access-Control-Allow-Origin: *'); 
+	 	$this->load->view('web');
+ }
 	public function index()
 	{
 		//$this->load->view('welcome_message');
@@ -27,7 +32,7 @@ class Welcome extends CI_Controller {
 			$cek = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"
 			and table_name = "'.$value->table_name.'_div"','row');
 			if(!empty($cek)){
-				$detail = $this->mymodel->withquery('select max(Dividends) as max,min(Dividends) as min, avg(Dividends) as avg from '.$value->table_name."_div",'row');			
+				$detail = $this->mymodel->withquery('select max(Dividends) as max,min(Dividends) as min, avg(Dividends) as avg from '.$value->table_name."_div",'row');
 				if (!empty($detail)) {
 					$data = array('id_perusahaan' => $value->id_perusahaan,
 					'min_div' =>$detail->min,'max_div' =>$detail->max, 'avg_div'=>$detail->avg,
@@ -35,7 +40,7 @@ class Welcome extends CI_Controller {
 					$insert = $this->mymodel->insert('div_detail',$data);
 				}
 			}else {
-					
+
 				$data = array('id_perusahaan' => $value->id_perusahaan,
 				'min_div' =>0,'max_div' =>0, 'avg_div'=>0,
 				'dividend'=>false);
@@ -48,7 +53,7 @@ class Welcome extends CI_Controller {
 		$perusahaan = $this->mymodel->getall('perusahaan');
 		//print_r($perusahaan);
 		foreach ($perusahaan as $key => $value) {
-			//$cek = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"','row');			
+			//$cek = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"','row');
 			$cek2 = $this->mymodel->withquery('SELECT id,tanggal FROM '.$value->table_name.' WHERE BUKA is NULL','result');
 			foreach($cek2 as $key2 => $value2){
 				$cek3 = $this->mymodel->withquery('SELECT * FROM '.$value->table_name.' WHERE id = '.(($value2->id)-1),'row');
@@ -60,7 +65,7 @@ class Welcome extends CI_Controller {
 					'Tutup' => $cek3->Tutup,
 					'Adj_Close' => $cek3->Adj_Close,
 					'Volume' => $cek3->Volume );
-				$update = $this->mymodel->update($value->table_name,$data,'id',$value2->id);			
+				$update = $this->mymodel->update($value->table_name,$data,'id',$value2->id);
 				//echo $value->table_name . "<br>"; //nama tabel
 				//break;
 			}
