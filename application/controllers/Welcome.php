@@ -67,4 +67,51 @@ class Welcome extends CI_Controller {
 			//break;
 		}
 	}
+
+	public function getdiffyear(){
+		$perusahaan = $this->mymodel->getall('perusahaan');
+		
+		foreach ($perusahaan as $key => $value) {
+			$cek = $this->mymodel->withquery('select
+			(select date_format(tanggal,"%Y") from '.$value->table_name.' order by tanggal asc limit 1)  as "first_year",
+			(select date_format(tanggal,"%Y") from '.$value->table_name.' order by tanggal desc limit 1) as "last_year",
+			(select (last_year-first_year)) as "diff"','result');
+			//echo $value->table_name." ";
+			foreach($cek as $key2 => $value2){
+				$data[] = array(
+					'table_name'   => $value->table_name,   
+					'first_year'   => $value2->first_year, 
+					'last_year'   => $value2->last_year,
+					'diff'   => $value2->diff,
+				);
+			}
+		}
+		$json = json_encode($data);
+		$this->getCloseEveryYear($json);
+	}
+
+	public function getCloseEveryYear($json){
+		$json = json_decode($json);
+		foreach ($json as $key => $value) {
+			for($i=($value->first_year);$i<=($value->last_year);$i++){
+				//echo $value->table_name;
+				//echo $value->first_year;
+				$cek = $this->mymodel->withquery("SELECT date_format(tanggal,'%Y-%m-%d') as 'tanggal',date_format(tanggal,'%Y') as 'year', Tutup FROM ".$value->table_name." WHERE year(tanggal) = '".$i."' and month(tanggal) = '12' order by tanggal desc limit 1" ,"result");
+				foreach($cek as $key2 => $value2){
+					$data2[] = array(
+						'year'   => $i, 
+						'close'   => ceil($value2->Tutup),
+					);
+				}
+			}	
+			$data[] = array(
+				'table_name'   => $value->table_name,
+				'data' => $data2   
+			);
+			$json = json_encode($data);
+			$result['data'] = $json;
+			 	
+		}
+		echo $result['data'];
+	}
 }
