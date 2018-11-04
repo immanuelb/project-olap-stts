@@ -87,35 +87,53 @@ class Welcome extends CI_Controller {
 					'table_name'   => $value->table_name,   
 					'first_year'   => $value2->first_year, 
 					'last_year'   => $value2->last_year,
-					'diff'   => $value2->diff,
+					//'diff'   => $value2->diff,
 				);
-			}
+			}	
 		}
 		$json = json_encode($data);
+		//echo $json;
 		$this->getCloseEveryYear($json);
 	}
 
 	public function getCloseEveryYear($json){
 		$json = json_decode($json);
 		foreach ($json as $key => $value) {
+			$initialTutup = 0;
+			$firstClose = 0;
+			$lastClose = 0;
+			$data2 = [];
 			for($i=($value->first_year);$i<=($value->last_year);$i++){
 				//echo $value->table_name;
 				//echo $value->first_year;
 				$cek = $this->mymodel->withquery("SELECT date_format(tanggal,'%Y-%m-%d') as 'tanggal',date_format(tanggal,'%Y') as 'year', Tutup FROM ".$value->table_name." WHERE year(tanggal) = '".$i."' and month(tanggal) = '12' order by tanggal desc limit 1" ,"result");
 				foreach($cek as $key2 => $value2){
+					if($i == ($value->first_year)){ $firstClose = ($value2->Tutup); }
+					if($i == ($value->last_year-1)){ $lastClose = ($value2->Tutup); }
+
+					if($initialTutup == 0){$initialTutup = $value2->Tutup; }
+
+					$diff = ceil(($value2->Tutup) - ($initialTutup));
+					$close = ceil($value2->Tutup);
 					$data2[] = array(
 						'year'   => $i, 
-						'close'   => ceil($value2->Tutup),
+						'close'   => $close,
+						'diff' => $diff,
+						'percentage' => round($diff * 100 / ceil($initialTutup),2 )
 					);
+
 				}
+				$initialTutup = $value2->Tutup;
 			}	
 			$data[] = array(
 				'table_name'   => $value->table_name,
-				'data' => $data2   
+				'firstClose' => ceil($firstClose),
+				'lastClose' => ceil($lastClose),
+				'percentage' => ceil((($lastClose-$firstClose)/$firstClose)*100), 
+				'data' => $data2,  
 			);
 			$json = json_encode($data);
 			$result['data'] = $json;
-			 	
 		}
 		echo $result['data'];
 	}
