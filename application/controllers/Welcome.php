@@ -31,7 +31,8 @@ class Welcome extends CI_Controller {
 		foreach ($perusahaan as $key => $value) {
 			$cek = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"
 			and table_name = "'.$value->table_name.'_div"','row');
-			if(!empty($cek)){
+			//insert to div detail tabel
+			/*if(!empty($cek)){
 				$detail = $this->mymodel->withquery('select max(Dividends) as max,min(Dividends) as min, avg(Dividends) as avg from '.$value->table_name."_div",'row');
 				if (!empty($detail)) {
 					$data = array('id_perusahaan' => $value->id_perusahaan,
@@ -45,7 +46,7 @@ class Welcome extends CI_Controller {
 				'min_div' =>0,'max_div' =>0, 'avg_div'=>0,
 				'dividend'=>false);
 				$insert = $this->mymodel->insert('div_detail',$data);
-			}
+			}*/
 		}
 	}
 
@@ -151,4 +152,40 @@ class Welcome extends CI_Controller {
 		}
 		echo $result['data'];
 	}
+
+	public function filter($dividends,$rangefirstClose,$rangeendClose,$limit){
+		//avg best percentage 
+		$cek2 = $this->mymodel->withquery('select sum(percentage) as "total" from close where 1','result');
+			
+	}
+
+	public function filter2(){
+		//avg best percentage 
+		$total = $this->mymodel->withquery('select sum(percentage) as "total" from close where 1','row');
+		$bestpercetage = ceil($total->total/45);
+
+		//contoh filter
+		$dividend = 1; //1/0
+		$rangefirstClose = 1000;
+		$rangeendClose = 2000; 
+		$limit = 3;
+
+		$get = $this->mymodel->withquery('select c.table_name,c.lastClose 
+		from close c, div_detail d 
+		where d.id_perusahaan = c.id_perusahaan and c.lastClose >= '.$rangefirstClose.' 
+		and c.lastClose <= '.$rangeendClose.' and d.dividend = '.$dividend.' and c.percentage >= '.$bestpercetage.' 
+		limit '.$limit.'  ','result');
+		
+		foreach($get as $key => $value){
+			$data[] = array(
+				'table_name'   => $value->table_name,
+				'lastClose' => $value->lastClose,
+			);
+			$json = json_encode($data);
+		}
+		echo $json;
+
+	}
+
+
 }
