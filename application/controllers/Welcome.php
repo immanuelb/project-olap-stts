@@ -84,6 +84,7 @@ class Welcome extends CI_Controller {
 			//echo $value->table_name." ";
 			foreach($cek as $key2 => $value2){
 				$data[] = array(
+					'id_perusahaan'   => $value->id_perusahaan,
 					'table_name'   => $value->table_name,   
 					'first_year'   => $value2->first_year, 
 					'last_year'   => $value2->last_year,
@@ -121,17 +122,30 @@ class Welcome extends CI_Controller {
 						'diff' => $diff,
 						'percentage' => round($diff * 100 / ceil($initialTutup),2 )
 					);
-
+					//Insert to table close_detail
+					/*$datainsert = array('id_perusahaan' => $value->id_perusahaan,
+					'year' => $i, 'close' => $close,
+					'diff' => $diff, 'percentage' => round($diff * 100 / ceil($initialTutup),2 )
+					);
+					$insert = $this->mymodel->insert('close_detail',$datainsert);*/
 				}
 				$initialTutup = $value2->Tutup;
 			}	
 			$data[] = array(
+				'id_perusahaan'   => $value->id_perusahaan,
 				'table_name'   => $value->table_name,
 				'firstClose' => ceil($firstClose),
 				'lastClose' => ceil($lastClose),
 				'percentage' => ceil((($lastClose-$firstClose)/$firstClose)*100), 
 				'data' => $data2,  
 			);
+			//Insert to table close
+			/*$datainsert = array('id_perusahaan' => $value->id_perusahaan,
+			'table_name' => $value->table_name, 'firstClose' => ceil($firstClose),
+			'lastClose' => ceil($lastClose), 'percentage' => ceil((($lastClose-$firstClose)/$firstClose)*100),
+			);
+			$insert = $this->mymodel->insert('close',$datainsert);*/
+
 			$json = json_encode($data);
 			$result['data'] = $json;
 		}
