@@ -74,3 +74,9 @@
   <!-- /.content-wrapper -->
 
 <?php $this->load->view("footer"); ?>
+	<!-- Lion_admin dashboard demo (This is only for demo purposes) -->
+	<script src="<?php echo base_url('resource/') ?>js/pages/dashboard.js"></script>
+
+</body>
+
+</html>

@@ -47,9 +47,9 @@
                     </tr>
                     <?php $data = json_decode($data); ?>
                     <?php foreach($data as $key => $value){ ?>
-                        <tr>
+                       <tr>
                         <td><a href="javascript:void(0)"><?= $value->id_perusahaan; ?></a></td>
-                        <td><?= $value->name_perusahaan; ?></td>
+                        <td><a href="<?= site_url("lists/detaildevided/$value->table_name") ?>"><?= $value->name_perusahaan; ?></a></td>
                         <td><?= number_format($value->min_div,2,",","."); ?></td>
                         <td><?= number_format($value->avg_div,2,",","."); ?></td>
                         <td><?= number_format($value->max_div,2,",","."); ?></td>
@@ -76,3 +76,9 @@
   <!-- /.content-wrapper -->
 
 <?php $this->load->view("footer"); ?>
+	<!-- Lion_admin dashboard demo (This is only for demo purposes) -->
+	<script src="<?php echo base_url('resource/') ?>js/pages/dashboard.js"></script>
+
+</body>
+
+</html>

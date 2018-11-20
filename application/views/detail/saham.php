@@ -38,7 +38,7 @@
               <h5><i class="fa fa-circle mr-5 text-danger"></i>Close</h5>
             </li>
           </ul>
-          <div class="chart" id="bar-chart" style="height: 300px;"></div>
+          <div class="chart" id="bar-chart-saham" style="height: 300px;"></div>
         </div>
         <!-- /.box-body -->
         </div>
@@ -65,7 +65,7 @@
           <h5><i class="fa fa-circle mr-5 text-success"></i>Close</h5>
         </li>
       </ul>
-          <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+          <div class="chart" id="area-chart-saham" style="height: 300px;"></div>
         </div>
         <!-- /.box-body -->
       </div>
@@ -104,6 +104,7 @@
                     <th>Volume</th>
                   </tr>
                   <?php $data = json_decode($data); ?>
+                  <?php $saham = $this->uri->segment(3); ?>
                   <?php foreach($data as $key => $value){ ?>
                       <tr>
                       <td><a href="javascript:void(0)"><?= $value->Id; ?></a></td>
@@ -130,5 +131,62 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
 <?php $this->load->view("footer"); ?>
+  <script type="text/javascript">
+    
+    var base_url = "<?= base_url(); ?>";
+    var saham = "<?= $saham ?>";
+    var results;
+    
+    $.ajax({
+        url:base_url+'index.php/lists/getChartDataSaham',
+        method: 'post',
+        data: { saham: saham},
+        dataType: 'json',
+        success: function(response){
+            updatechart(response);
+        },
+        error: function(err){
+            console.log(err);
+        }
+    });
+    
+    function updatechart(res){
+
+      //Saham BAR CHART
+      var bar = new Morris.Bar({
+        element: 'bar-chart-saham',
+        resize: false,
+        data: res,
+          barColors: ['#03a9f3', '#fb9678'],
+          barSizeRatio: 0.5,
+          barGap:0,
+          xkey: 'year',
+          ykeys: ['open', 'close'],
+          labels: ['Opening', 'Closing'],
+          hideHover: 'auto',
+          xLabelAngle: 60
+      });
+
+      // Area CHART
+      var area = new Morris.Area({
+        element: 'area-chart-saham',
+        resize: false,
+        data: res,
+          xkey: 'year',
+          ykeys: ['open', 'close'],
+          labels: ['Opening', 'Closing'],
+          fillOpacity: 0,
+          lineWidth:0.5,
+          lineColors: ['#03a9f3', '#00c292'],
+          hideHover: 'auto',
+          xLabels: 'year',
+          xLabelAngle: 60
+      });
+    }
+      
+
+  </script>
+</body>
+
+</html>

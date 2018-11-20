@@ -240,17 +240,10 @@
 
 	<!-- Lion_admin App -->
 	<script src="<?php echo base_url('resource/') ?>js/template.js"></script>
-
-	<!-- Lion_admin dashboard demo (This is only for demo purposes) -->
-	<script src="<?php echo base_url('resource/') ?>js/pages/dashboard.js"></script>
-
-	<!-- Lion_admin for calendar -->
+  
+  <!-- Lion_admin for calendar -->
 	<script src="<?php echo base_url('resource/') ?>js/pages/calendar.js"></script>
 
 	<!-- Lion_admin for demo purposes -->
-	<script src="<?php echo base_url('resource/') ?>js/demo.js"></script>
-
-
-</body>
-
-</html>
+  <script src="<?php echo base_url('resource/') ?>js/demo.js"></script>
+  
