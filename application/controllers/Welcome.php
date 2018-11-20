@@ -27,10 +27,13 @@ class Welcome extends CI_Controller {
 	{
 		//$this->load->view('welcome_message');
 		$perusahaan = $this->mymodel->getall('perusahaan');
-		print_r($perusahaan);
+		//print_r($perusahaan);
+		$arrjson[]="";
 		foreach ($perusahaan as $key => $value) {
 			$cek = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"
 			and table_name = "'.$value->table_name.'_div"','row');
+
+			$cek2 = $this->mymodel->withquery('SELECT * FROM '.$value->table_name.' order by tanggal desc limit 1','row');
 			//insert to div detail tabel
 			/*if(!empty($cek)){
 				$detail = $this->mymodel->withquery('select max(Dividends) as max,min(Dividends) as min, avg(Dividends) as avg from '.$value->table_name."_div",'row');
@@ -47,7 +50,21 @@ class Welcome extends CI_Controller {
 				'dividend'=>false);
 				$insert = $this->mymodel->insert('div_detail',$data);
 			}*/
+			/*foreach($cek2 as $key2 => $value2){
+				$data[] = array(
+					'ID' => $value2->Id,
+					'Tanggal' => $value2->Tanggal,
+					'Buka' => $value2->Buka,
+					'High' => $value2->High,
+					'Low' => $value2->Low,
+					'Tutup' => $value2->Tutup,
+					'Adj_Close' => $value2->Adj_Close,
+					'Volume' => $value2->Volume );
+			}*/
+			$json = json_encode($cek2);
+			array_push($arrjson,$json);
 		}
+		print_r($arrjson);
 	}
 
 	public function replace(){
