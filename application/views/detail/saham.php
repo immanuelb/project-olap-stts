@@ -9,7 +9,8 @@
       </h1>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> List</a></li>
-        <li class="breadcrumb-item active"><a href="#">List Saham</a></li>
+        <li class="breadcrumb-item"><a href="#">List Saham</a></li>
+        <li class="breadcrumb-item active"><a href="#"><?= $this->uri->segment(3); ?></a></li>
       </ol>
     </section>
 

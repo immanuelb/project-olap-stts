@@ -46,4 +46,8 @@ class Lists extends CI_Controller{
         $this->load->view("list/listdeviden",$result);
     }
 
+    public function detailsaham($saham){
+        
+        $this->load->view("detail/saham",$result);
+    }
 }
