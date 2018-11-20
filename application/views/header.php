@@ -387,7 +387,7 @@
 		<li class="nav-devider"></li>
         <li class="header nav-small-cap">PERSONAL</li>
         <li class="active">
-          <a href="index.html">
+          <a href="<?= site_url("Welcome/web"); ?>">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
