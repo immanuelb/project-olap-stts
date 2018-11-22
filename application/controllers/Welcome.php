@@ -18,11 +18,38 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
- public function web($value='')
- {
-	 header('Access-Control-Allow-Origin: *'); 
-	 	$this->load->view('web');
- }
+	public function web($value='')
+	{
+		header('Access-Control-Allow-Origin: *'); 
+		$cek = $this->mymodel->withquery('SELECT
+		(SELECT lastClose FROM close order by lastClose asc limit 1) as "first",
+		(SELECT lastClose FROM close order by lastClose desc limit 1) as "last"
+		','row');
+		$cek2 = $this->mymodel->withquery('SELECT 
+		(SELECT percentage FROM close order by percentage asc limit 1) as "first", 
+		(SELECT percentage FROM close order by percentage desc limit 1) as "last"
+		','row');
+
+		$data['firstPrice'] = ""; 
+		$data['lastPrice'] = "";
+		$data['firstPercent'] =""; 
+		$data['lastPercent'] = "";
+		foreach($cek as $key=>$value){
+			$data['firstPrice'] = $cek->first;
+			$data['lastPrice'] = $cek->last; 
+		}
+		foreach($cek2 as $key2=>$value2){
+			if(ceil($cek2->first) < 0){
+				$data['firstPercent'] = 1;	
+			}else{
+				$data['firstPercent'] = ceil($cek2->first);
+			}
+			if(ceil($cek2->last)>100){
+				$data['lastPercent'] = ceil($cek2->last) - ($cek2->last%10); 
+			}
+		}
+		$this->load->view('web',$data);
+	}
 
  	public function slider()
  	{
@@ -182,33 +209,40 @@ class Welcome extends CI_Controller {
 			
 	}
 
-	public function filter2(){
-		//avg best percentage 
-		$total = $this->mymodel->withquery('select sum(percentage) as "total" from close where 1','row');
-		$bestpercetage = ceil($total->total/45);
-
-		//contoh filter
-		$dividend = 1; //1/0
+	public function search(){
+		//contoh search
+		/*$dividend = 1; //1/0
 		$rangefirstClose = 1000;
 		$rangeendClose = 2000; 
-		$limit = 3;
+		$limit = 3;*/
 
-		$get = $this->mymodel->withquery('select c.table_name,c.lastClose 
-		from close c, div_detail d 
-		where d.id_perusahaan = c.id_perusahaan and c.lastClose >= '.$rangefirstClose.' 
-		and c.lastClose <= '.$rangeendClose.' and d.dividend = '.$dividend.' and c.percentage >= '.$bestpercetage.' 
-		limit '.$limit.'  ','result');
+		$limit = $this->input->post("num");
+		$rangefirstClose = $this->input->post("price1");
+		$rangeendClose = $this->input->post("price2");
+		$dividend = $this->input->post("dividend");
+		$bestpercetage = $this->input->post("percentage");
+		//avg best percentage 
+		//$total = $this->mymodel->withquery('select sum(percentage) as "total" from close where 1','row');
+		//$bestpercetage = ceil($total->total/45);
 		
+		$get = $this->mymodel->withquery("select p.nama_perusahaan,c.table_name,c.firstClose,c.lastClose, c.percentage
+		from close c, div_detail d, perusahaan p
+		where p.id_perusahaan = d.id_perusahaan
+		and d.id_perusahaan = c.id_perusahaan 
+		and c.lastClose >= ".$rangefirstClose."
+		and c.lastClose <= ".$rangeendClose." and d.dividend = ".$dividend." and c.percentage >= ".$bestpercetage." 
+		limit ".$limit."  ","result");
+		$json="";
 		foreach($get as $key => $value){
 			$data[] = array(
+				'nama_perusahaan' => $value->nama_perusahaan,
 				'table_name'   => $value->table_name,
+				'firstClose' => $value->firstClose,
 				'lastClose' => $value->lastClose,
+				'percentage' => $value->percentage
 			);
 			$json = json_encode($data);
 		}
 		echo $json;
-
 	}
-
-
 }

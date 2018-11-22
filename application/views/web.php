@@ -27,10 +27,11 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+					<form id="frmSubmit" action="<?= site_url(); ?>/Welcome/search" method="post">
           <div class="row margin">
-            <div class="col-md-4 col-12">
+            <div class="col-md-3 col-12">
               <div class="form-group">
-								<label>Filter by Number</label>
+								<label>Filter by Number Top Stocks</label>
 								<input class="slider1" type="text" value="" 
 									data-slider-min="1" data-slider-max="45" data-slider-step="1" data-slider-value="5"
 									data-slider-orientation="horizontal" data-slider-id="red"
@@ -38,26 +39,37 @@
 									<span id="slider1Label">Current Number: <span id="slider1Val">5</span></span>
               </div>
 						</div>
-						<div class="col-md-4 col-12">
+						<div class="col-md-3 col-12">
 							<div class="form-group">
 								<label>Filter by Price</label>
 									<input class="slider2" type="text" value="" 
-									data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[10,1000]"
+									data-slider-min="<?= $firstPrice; ?>" data-slider-max="<?= $lastPrice; ?>" data-slider-step="1" data-slider-value="[<?= $firstPrice; ?>,<?= $lastPrice; ?>]"
 									data-slider-orientation="horizontal" data-slider-id="blue"
 									/> 
-									<span id="slider2Label">Rp<span id="slider2Val">1</span></span>
-									<span id="slider2Label2" class="pull-right">Rp<span id="slider2Val2">1000</span></span>
+									<span id="slider2Label">Rp<span id="slider2Val"><?= $firstPrice; ?></span></span>
+									<span id="slider2Label2" class="pull-right">Rp<span id="slider2Val2"><?= $lastPrice; ?></span></span>
 							</div>
 						</div>
-						<div class="col-md-4 col-12">
+						<div class="col-md-3 col-12">
+							<div class="form-group">
+								<label>Filter by Increase Percetage</label>
+									<input class="slider3" type="text" value="" 
+									data-slider-min="<?= $firstPercent; ?>" data-slider-max="<?= $lastPercent; ?>" data-slider-step="10" data-slider-value="[<?= $firstPercent; ?>,<?= $lastPercent; ?>]"
+									data-slider-orientation="horizontal" data-slider-id="blue"
+									/> 
+									<span id="slider3Label">Low <span id="slider3Val"><?= $firstPercent; ?></span>%</span>
+									<span id="slider3Label2" class="pull-right">High <span id="slider3Val2"><?= $lastPercent; ?></span>%</span>
+							</div>
+						</div>
+						<div class="col-md-3 col-12">
 							<input type="checkbox" id="dividend_chk" class="filled-in" checked />
-							<label for="dividend_chk">Dividends</label>
+							<label for="dividend_chk">Dividends</label> (Every Year)
 						</div>
 						<div class="col-md-12 col-12" >
-							<button id="checkResults" type="submit" class="btn btn-info pull-right">Submit</button>
+							<button id="checkResults" type="button" class="btn btn-info pull-right">Submit</button>
 						</div>
-              
-          </div>
+					</div>
+					</form>
           <!-- /.row -->
         </div>
         <!-- /.box-body -->
@@ -68,67 +80,30 @@
 			<!-- SELECT2 EXAMPLE -->
 			<div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Results</h3>
-        </div>
+					<h3 class="box-title">Results</h3>
+				</div>
+				<div class="box-body no-padding">
+					<div class="table-responsive">
+						<table id="dataResult" class="table table-hover">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Symbol</th>
+									<th>FirstOffer</th>
+									<th>LastCloseOffer</th>
+									<th>Percentage Increase</th>
+									<th>Detail</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- new data -->
+							</tbody>
+						</table>
+					</div>
+         </div>
       </div>
 		</div>
-
-		<div class="col-lg-4 col-12">
-			<!-- Doughnut CHART -->
-			  <div class="box">
-				<div class="box-header with-border">
-				  <h4 class="box-title">List Saham</h4>
-
-					<ul class="box-controls pull-right">
-					  <li><a class="box-btn-close" href="#"></a></li>
-					  <li><a class="box-btn-slide" href="#"></a></li>
-					  <li><a class="box-btn-fullscreen" href="#"></a></li>
-					</ul>
-				</div>
-				<div class="box-body">
-					<ul class="list-inline text-right">
-						<li>
-							<h5><i class="fa fa-circle mr-5 text-info"></i>Inquery</h5>
-						</li>
-						<li>
-							<h5><i class="fa fa-circle mr-5 text-danger"></i>Conform</h5>
-						</li>
-					</ul>
-				  <div class="chart" id="bar-chart" style="height: 300px;"></div>
-				</div>
-				<!-- /.box-body -->
-			  </div>
-			  <!-- /.box -->
-		</div>
-
-		<div class="col-lg-4 col-12">
-          <!-- AREA CHART -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h4 class="box-title">List Saham</h4>
-
-                <ul class="box-controls pull-right">
-                  <li><a class="box-btn-close" href="#"></a></li>
-                  <li><a class="box-btn-slide" href="#"></a></li>
-                  <li><a class="box-btn-fullscreen" href="#"></a></li>
-                </ul>
-            </div>
-            <div class="box-body chart-responsive">
-					<ul class="list-inline text-right">
-						<li>
-							<h5><i class="fa fa-circle mr-5 text-info"></i>Commercial</h5>
-						</li>
-						<li>
-							<h5><i class="fa fa-circle mr-5 text-success"></i>Residential</h5>
-						</li>
-					</ul>
-              <div class="chart" id="revenue-chart" style="height: 300px;"></div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-
-        </div>
 	  </div>
 	</section>
     <!-- /.content -->
@@ -151,6 +126,47 @@
 			slider2.on("slide", function(sliderValue) {
 				document.getElementById("slider2Val").textContent = sliderValue[0];
 				document.getElementById("slider2Val2").textContent = sliderValue[1];
+		});
+		var slider3 = new Slider('.slider3');
+			slider3.on("slide", function(sliderValue) {
+				document.getElementById("slider3Val").textContent = sliderValue[0];
+				document.getElementById("slider3Val2").textContent = sliderValue[1];
+		});
+
+		var frm = $('#frmSubmit');
+		var btn = $('#checkResults');
+    btn.click(function (e) {
+   			var numValue = document.getElementById('slider1Val').textContent;
+				var Price1 = document.getElementById('slider2Val').textContent;
+				var Price2 = document.getElementById('slider2Val2').textContent;
+				var Dividend = document.getElementById('dividend_chk').checked;
+				var Percentage = document.getElementById('slider3Val').textContent;
+
+				//e.preventDefault();
+				$("#dataResult tbody").empty();				
+        $.ajax({
+						type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: {num:numValue, price1: Price1, price2: Price2, dividend: Dividend, percentage:Percentage},
+            success: function (data) {
+								console.log('Submission was successful.');
+								var json = $.parseJSON(data);
+								for(var i=0;i<json.length;i++){
+									//console.log(json[i]['nama_perusahaan']);
+									$("#dataResult").append("<tr><td>" 
+											+ (i+1) + "</td><td>"
+											+ json[i]['nama_perusahaan'] + "</td><td>"
+											+ json[i]['table_name'] + "</td><td>"
+											+ json[i]['firstClose'] + "</td><td>"
+											+ json[i]['lastClose'] + "</td><td>"
+											+ json[i]['percentage'] + "</td><tr>");
+								}
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
 		});
 	</script>
 	
