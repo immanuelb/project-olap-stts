@@ -86,22 +86,5 @@ $(function () {
 		lineColors: ['#03a9f3', '#00c292'],
 		hideHover: 'auto'
     });
-	
-	
-	//------------------------------------------------------------------------------
-	
-	var donut = new Morris.Donut({
-      element: 'daily-inquery',
-      resize: true,
-      colors: ["#00c292", "#03a9f3", "#ab8ce4"],
-      data: [
-        {label: "On Site", value: 300},
-        {label: "By eMail", value: 55},
-        {label: "By Phone", value: 100}
-      ],
-      hideHover: 'auto'
-    });
-	
-	
 
 }); // End of use strict

@@ -23,6 +23,12 @@ class Welcome extends CI_Controller {
 	 header('Access-Control-Allow-Origin: *'); 
 	 	$this->load->view('web');
  }
+
+ 	public function slider()
+ 	{
+ 		$this->load->view('slider');
+	}
+
 	public function index()
 	{
 		//$this->load->view('welcome_message');

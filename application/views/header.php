@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="http://lion-admin-templates.multipurposethemes.com/lion-admin/images/favicon.ico">
+    <link rel="icon" href="">
 
     <title>Lion Admin - Dashboard</title>
 
@@ -18,6 +18,15 @@
 	<!-- Bootstrap-extend -->
 	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>css/bootstrap-extend.css">
   
+	<!-- bootstrap slider -->
+  <link rel="stylesheet" href="<?php echo base_url('resource/') ?>assets/vendor_plugins/bootstrap-slider/slider.css">
+  
+  	<!-- theme style -->
+	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>css/master_style.css">
+
+  <!-- Lion_admin skins -->
+  <link rel="stylesheet" href="<?php echo base_url('resource/') ?>css/skins/_all-skins.css">
+
 	<!-- Morris charts -->
 	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>assets/vendor_components/morris.js/morris.css">
 
@@ -34,11 +43,7 @@
 	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>assets/vendor_components/fullcalendar/dist/fullcalendar.min.css">
 	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>assets/vendor_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
 
-	<!-- theme style -->
-	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>css/master_style.css">
 
-	<!-- Lion_admin skins -->
-	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>css/skins/_all-skins.css">
 
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
