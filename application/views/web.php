@@ -159,7 +159,8 @@
 											+ json[i]['table_name'] + "</td><td>"
 											+ json[i]['firstClose'] + "</td><td>"
 											+ json[i]['lastClose'] + "</td><td>"
-											+ json[i]['percentage'] + "</td><tr>");
+											+ json[i]['percentage'] + "</td><td>"
+											+ "<button type='button' class='btn btn-success' onclick=window.location='<?= base_url('lists/detailsaham/'); ?>"+json[i]['table_name']+"' >Detail</button></td><tr>");
 								}
             },
             error: function (data) {
