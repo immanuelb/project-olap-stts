@@ -21,7 +21,7 @@
         <!-- Doughnut CHART -->
         <div class="box">
         <div class="box-header with-border">
-          <h4 class="box-title">Value Saham</h4>
+          <h4 class="box-title">Value Deviden</h4>
 
           <ul class="box-controls pull-right">
             <li><a class="box-btn-close" href="#"></a></li>
@@ -32,10 +32,7 @@
         <div class="box-body">
           <ul class="list-inline text-right">
             <li>
-              <h5><i class="fa fa-circle mr-5 text-info"></i>Open</h5>
-            </li>
-            <li>
-              <h5><i class="fa fa-circle mr-5 text-danger"></i>Close</h5>
+              <h5><i class="fa fa-circle mr-5 text-info"></i>Deviden</h5>
             </li>
           </ul>
           <div class="chart" id="bar-chart-deviden" style="height: 300px;"></div>
@@ -48,7 +45,7 @@
       <!-- AREA CHART -->
       <div class="box">
         <div class="box-header with-border">
-          <h4 class="box-title">Value Saham</h4>
+          <h4 class="box-title">Value Deviden</h4>
 
             <ul class="box-controls pull-right">
               <li><a class="box-btn-close" href="#"></a></li>
@@ -59,10 +56,7 @@
         <div class="box-body chart-responsive">
       <ul class="list-inline text-right">
         <li>
-          <h5><i class="fa fa-circle mr-5 text-info"></i>Open</h5>
-        </li>
-        <li>
-          <h5><i class="fa fa-circle mr-5 text-success"></i>Close</h5>
+          <h5><i class="fa fa-circle mr-5 text-info"></i>Deviden</h5>
         </li>
       </ul>
           <div class="chart" id="area-chart-deviden" style="height: 300px;"></div>
@@ -78,16 +72,6 @@
         <div class="box">
           <div class="box-header with-border">
             <h3 class="box-title">Saham</h3>
-
-            <div class="box-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                </div>
-              </div>
-            </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body no-padding">

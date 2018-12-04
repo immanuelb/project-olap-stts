@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="">
 
-    <title>Lion Admin - Dashboard</title>
+    <title>Dashboard</title>
 
 	<!-- Bootstrap 4.0-->
 	<link rel="stylesheet" href="<?php echo base_url('resource/') ?>assets/vendor_components/bootstrap/dist/css/bootstrap.css">
