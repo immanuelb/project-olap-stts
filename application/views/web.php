@@ -41,7 +41,7 @@
 						</div>
 						<div class="col-md-3 col-12">
 							<div class="form-group">
-								<label>Filter by Price</label>
+								<label>Filter by Price (Latest Close)</label>
 									<input class="slider2" type="text" value="" 
 									data-slider-min="<?= $firstPrice; ?>" data-slider-max="<?= $lastPrice; ?>" data-slider-step="1" data-slider-value="[<?= $firstPrice; ?>,<?= $lastPrice; ?>]"
 									data-slider-orientation="horizontal" data-slider-id="blue"
@@ -52,7 +52,7 @@
 						</div>
 						<div class="col-md-3 col-12">
 							<div class="form-group">
-								<label>Filter by Increase Percetage</label>
+								<label>Filter by Percetage (from IPO)</label>
 									<input class="slider3" type="text" value="" 
 									data-slider-min="<?= $firstPercent; ?>" data-slider-max="<?= $lastPercent; ?>" data-slider-step="10" data-slider-value="[<?= $firstPercent; ?>,<?= $lastPercent; ?>]"
 									data-slider-orientation="horizontal" data-slider-id="blue"
@@ -92,7 +92,7 @@
 									<th>Symbol</th>
 									<th>FirstOffer</th>
 									<th>LastCloseOffer</th>
-									<th>Percentage Increase</th>
+									<th>Percentage Increase(from IPO)</th>
 									<th>Detail</th>
 								</tr>
 							</thead>

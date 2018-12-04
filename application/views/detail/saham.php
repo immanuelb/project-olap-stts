@@ -104,10 +104,10 @@
                     <th>Volume</th>
                   </tr>
                   <?php $data = json_decode($data); ?>
-                  <?php $saham = $this->uri->segment(3); ?>
-                  <?php foreach($data as $key => $value){ ?>
+                  <?php $saham = $this->uri->segment(3); $i=0; ?>
+                  <?php foreach($data as $key => $value){ $i++; ?>
                       <tr>
-                      <td><a href="javascript:void(0)"><?= $value->Id; ?></a></td>
+                      <td><a href="javascript:void(0)"><?= $value->id ?></a></td>
                       <td><?= date("D,d-M-Y",strtotime($value->Tanggal)); ?></td>
                       <td><?= $value->Buka; ?></td>
                       <td><?= $value->High; ?></td>

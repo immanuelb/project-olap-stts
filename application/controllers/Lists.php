@@ -84,7 +84,7 @@ class Lists extends CI_Controller{
         $this->pagination->initialize($config);
         
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $data = $this->mymodel->getalllimitasc($saham,$page,$config['per_page'],1);
+        $data = $this->mymodel->getalllimitasc($saham,$page,$config['per_page'],'id');
         $json = json_encode($data);
         $result['data'] = $json;
         $result["links"] = $this->pagination->create_links();
