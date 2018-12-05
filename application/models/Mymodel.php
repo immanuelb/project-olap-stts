@@ -15,9 +15,13 @@ class Mymodel extends CI_Model {
   {
     $query = $this->db->query($query1);
     if ($result=='result') {
-      return $query->result();
+      if($query){
+        return $query->result();
+      }
     }else {
+      if($query){
         return $query->row();
+      }
     }
   }
   public function add_history($msg)

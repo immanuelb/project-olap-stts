@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost/project-olap-stts/';
-
+//$config['base_url'] = 'http://olap.miodigitalsolution.com/';
 /*
 |--------------------------------------------------------------------------
 | Index File

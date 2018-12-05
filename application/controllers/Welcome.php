@@ -59,7 +59,7 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		//$this->load->view('welcome_message');
-		$perusahaan = $this->mymodel->getall('perusahaan');
+		/*$perusahaan = $this->mymodel->getall('perusahaan');
 		//print_r($perusahaan);
 		$arrjson[]="";
 		foreach ($perusahaan as $key => $value) {
@@ -94,10 +94,12 @@ class Welcome extends CI_Controller {
 					'Adj_Close' => $value2->Adj_Close,
 					'Volume' => $value2->Volume );
 			}*/
-			$json = json_encode($cek2);
+			/*$json = json_encode($cek2);
 			array_push($arrjson,$json);
 		}
-		print_r($arrjson);
+		print_r($arrjson);*/
+		//echo phpinfo();
+		$this->web();
 	}
 
 	public function replace(){

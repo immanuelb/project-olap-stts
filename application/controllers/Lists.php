@@ -7,16 +7,18 @@ class Lists extends CI_Controller{
         $perusahaan = $this->mymodel->getall('perusahaan');
         $arrjson[]="";
         foreach ($perusahaan as $key => $value) {
-            $cek = $this->mymodel->withquery('SELECT * FROM '.$value->table_name.' order by tanggal desc limit 1','row');
+
+            $cek = $this->mymodel->withquery('SELECT * FROM '.strtolower($value->table_name).' order by tanggal desc limit 1','row');
+            $cek = json_decode(json_encode($cek), true);
             $data[] = array(
                 'id_perusahaan'   => $value->id_perusahaan,
                 'name_perusahaan' => $value->nama_perusahaan,
                 'table_name'   => $value->table_name,
-                'tanggal' => $cek->Tanggal,
-                'open' => $cek->Buka,
-                'high' => $cek->High, 
-                'low' => $cek->Low,  
-                'close' => $cek->Tutup  
+                'tanggal' => $cek['Tanggal'],
+                'open' => $cek['Buka'],
+                'high' => $cek['High'], 
+                'low' => $cek['Low'],  
+                'close' => $cek['Tutup']  
             );
             $json = json_encode($data);
             $result['data'] = $json;
@@ -48,6 +50,7 @@ class Lists extends CI_Controller{
     }
 
     public function detailsaham($saham){
+        $saham = strtolower($saham);
         $cek = $this->mymodel->withquery('SELECT * FROM '.$saham.' ','result');
         
         $this->load->library('pagination');
@@ -84,7 +87,7 @@ class Lists extends CI_Controller{
         $this->pagination->initialize($config);
         
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $data = $this->mymodel->getalllimitasc($saham,$page,$config['per_page'],'id');
+        $data = $this->mymodel->getalllimitdesc($saham,$page,$config['per_page'],'id');
         $json = json_encode($data);
         $result['data'] = $json;
         $result["links"] = $this->pagination->create_links();
@@ -93,7 +96,8 @@ class Lists extends CI_Controller{
     }
 
     public function detaildevided($saham){
-        $test = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"
+        $saham = strtolower($saham);
+        $test = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="mio_olap"
 			and table_name = "'.$saham.'_div"','row');
         if(!empty($test)){
             $cek = $this->mymodel->withquery('SELECT * FROM '.$saham.'_div order by Tanggal asc','result');
@@ -164,6 +168,7 @@ class Lists extends CI_Controller{
 
     public function combine($saham){
        //Saham
+        $saham = strtolower($saham);
         $cek = $this->mymodel->withquery('SELECT * FROM '.$saham.' ','result');
         
         $this->load->library('pagination');
@@ -206,6 +211,7 @@ class Lists extends CI_Controller{
         $result["links"] = $this->pagination->create_links();
             
         //Deviden
+        $saham = strtolower($saham);
         $test = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"
         and table_name = "'.$saham.'_div"','row');
         if(!empty($test)){
@@ -278,6 +284,7 @@ class Lists extends CI_Controller{
 
     public function getChartDataSaham(){
         $saham = $this->input->post("saham");
+        $saham = strtolower($saham);
         $cek = $this->mymodel->withquery('select
         (select date_format(tanggal,"%Y") from '.$saham.' order by tanggal asc limit 1)  as "first_year",
         (select date_format(tanggal,"%Y") from '.$saham.' order by tanggal desc limit 1) as "last_year",
@@ -303,7 +310,8 @@ class Lists extends CI_Controller{
 
     public function getChartDataDeviden(){
         $saham = $this->input->post("saham");
-        $test = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="olap"
+        $saham = strtolower($saham);
+        $test = $this->mymodel->withquery('SELECT table_name FROM information_schema.tables where table_schema="mio_olap"
 			and table_name = "'.$saham.'_div"','row');
         if(!empty($test)){
             $cek = $this->mymodel->withquery('SELECT * FROM '.$saham.'_div order by Tanggal asc','result');

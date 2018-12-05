@@ -17,31 +17,7 @@
     <!-- Main content -->
     <section class="content">
     <div class="row">
-      <div class="col-lg-6 col-12">
-        <!-- Doughnut CHART -->
-        <div class="box">
-        <div class="box-header with-border">
-          <h4 class="box-title">Value Deviden</h4>
-
-          <ul class="box-controls pull-right">
-            <li><a class="box-btn-close" href="#"></a></li>
-            <li><a class="box-btn-slide" href="#"></a></li>
-            <li><a class="box-btn-fullscreen" href="#"></a></li>
-          </ul>
-        </div>
-        <div class="box-body">
-          <ul class="list-inline text-right">
-            <li>
-              <h5><i class="fa fa-circle mr-5 text-info"></i>Deviden</h5>
-            </li>
-          </ul>
-          <div class="chart" id="bar-chart-deviden" style="height: 300px;"></div>
-        </div>
-        <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    </div>
-    <div class="col-lg-6 col-12">
+    <div class="col-lg-12 col-12">
       <!-- AREA CHART -->
       <div class="box">
         <div class="box-header with-border">
@@ -131,22 +107,6 @@
     });
     
     function updatechart(res){
-
-      //Saham BAR CHART
-      var bar = new Morris.Bar({
-        element: 'bar-chart-deviden',
-        resize: false,
-        data: res,
-          barColors: ['#03a9f3', '#fb9678'],
-          barSizeRatio: 0.5,
-          barGap:0,
-          xkey: 'year',
-          ykeys: ['deviden'],
-          labels: ['Deviden'],
-          hideHover: 'auto',
-          xLabelAngle: 60
-      });
-
       // Area CHART
       var area = new Morris.Area({
         element: 'area-chart-deviden',
